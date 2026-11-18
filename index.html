@@ -18,6 +18,61 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1385172886875909&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+ 
+<script>
+function sendCapiEvent(eventName, eventId) {
+  const getCookie = (name) => {
+    const match = document.cookie.match(
+      new RegExp('(?:^|; )' + name + '=([^;]*)')
+    );
+    return match ? decodeURIComponent(match[1]) : '';
+  };
+
+  fetch('https://prince-sir-telegram-bot.princemadhiya22.workers.dev', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    keepalive: true,
+    body: JSON.stringify({
+      event_name: eventName,
+      event_id: eventId,
+      event_source_url: window.location.href,
+      fbp: getCookie('_fbp'),
+      fbc: getCookie('_fbc')
+    })
+  }).catch(console.error);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const joinButton = document.querySelector('a.join');
+
+  if (joinButton) {
+    joinButton.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      const eventId = crypto.randomUUID();
+
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', {}, {
+          eventID: eventId
+        });
+      }
+
+      sendCapiEvent('Lead', eventId);
+
+      const invite = '1AhRlzYEYNdkYmI1';
+
+      window.location.href = 'tg://join?invite=' + invite;
+
+      setTimeout(function() {
+        window.location.href = 'https://t.me/+' + invite;
+      }, 1200);
+    });
+  }
+});
+</script>
+ 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101629">
@@ -76,21 +131,23 @@ h1{font-size:clamp(36px,9vw,56px);line-height:1.05;margin:8px 0 12px;font-weight
 
 
 
-<a class="join" href="https://t.me/+1AhRlzYEYNdkYmI1"
-   target="_blank" rel="noopener noreferrer"
-   onclick="if(typeof fbq==='function'){fbq('track','Lead');}">
-   JOIN NOW
+<<a class="join" href="https://t.me/+1AhRlzYEYNdkYmI1"
+   target="_blank" rel="noopener noreferrer">
+JOIN NOW PRINCE SIR
 </a>
-
 <script>
 document.querySelectorAll('a.join').forEach(function(btn) {
   btn.addEventListener('click', function(e) {
     e.preventDefault();
 
     if (typeof fbq === 'function') {
-      fbq('track', 'Lead');
-    }
+      const pageEventId = crypto.randomUUID();
 
+fbq('track', 'PageView', {}, {
+  eventID: pageEventId
+});
+
+sendCapiEvent('PageView', pageEventId);
     var invite = '1AhRlzYEYNdkYmI1';
     var fallback = 'https://t.me/+' + invite;
 
