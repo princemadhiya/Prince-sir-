@@ -134,11 +134,10 @@ e.preventDefault();
 
 const eventId=crypto.randomUUID();
 
-if(typeof fbq==='function'){
-fbq('track','Lead',{},{
-eventID:eventId
+fbq('track', 'Lead', {
+  value: 1,
+  currency: 'INR'
 });
-}
 
 sendCapiEvent('Lead',eventId);
 
