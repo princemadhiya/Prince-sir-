@@ -101,30 +101,33 @@ Open Telegram Channel
 </main>
 
 <script>
-// CAPI event
-function sendCapiEvent(eventName,eventId){
-const getCookie=(name)=>{
-const match=document.cookie.match(
-new RegExp('(?:^|; )'+name+'=([^;]*)')
-);
-return match?decodeURIComponent(match[1]):'';
-};
 
-return fetch(
-'https://prince-sir-telegram-bot.princemadhiya22.workers.dev',
-{
-method:'POST',
-headers:{'Content-Type':'application/json'},
-keepalive:true,
-body:JSON.stringify({
-event_name:eventName,
-event_id:eventId,
-event_source_url:window.location.href,
-fbp:getCookie('_fbp'),
-fbc:getCookie('_fbc')
-})
-}
-).catch(console.error);
+// CAPI event
+function sendCapiEvent(eventName, eventId) {
+  const getCookie = (name) => {
+    const match = document.cookie.match(
+      new RegExp('(?:^|; )' + name + '=([^;]*)')
+    );
+    return match ? decodeURIComponent(match[1]) : '';
+  };
+
+  return fetch(
+    'https://prince-sir-telegram-bot.princemadhiya22.workers.dev',
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      keepalive: true,
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        fbp: getCookie('_fbp'),
+        fbc: getCookie('_fbc'),
+        value: 1,
+        currency: 'INR'
+      })
+    }
+  ).catch(console.error);
 }
 
 // One Lead event per JOIN NOW click
